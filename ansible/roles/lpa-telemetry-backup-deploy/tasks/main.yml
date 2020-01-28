@@ -9,7 +9,7 @@
 
 - name: Cleanup secor lib directory
   file:
-    path: "/mount/{{ item.key }}/lib"
+    path: "/mount/{{ item.key }}"
     owner: "{{ analytics_user }} group={{ analytics_group }}"
     state: absent
   with_dict: "{{ secor_service_name }}"
