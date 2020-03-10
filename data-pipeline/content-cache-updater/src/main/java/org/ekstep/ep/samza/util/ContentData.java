@@ -67,9 +67,9 @@ public class ContentData {
         headers.put("Authorization", authKey);
         try {
             System.out.println(apiUrl);
-            HttpResponse<String> httpResponse = restUtil.get(apiUrl, headers);
+            String httpResponse = restUtil.get(apiUrl, headers);
             System.out.println("res" + httpResponse);
-            String responseBody = httpResponse.getBody();
+            String responseBody = httpResponse;
             System.out.println("responseBody" + responseBody);
             Gson gson = new Gson();
             Map<String, Object> response = gson.fromJson(

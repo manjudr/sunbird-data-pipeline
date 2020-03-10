@@ -3,7 +3,6 @@ package org.ekstep.ep.samza.service;
 import com.fiftyonred.mock_jedis.MockJedis;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mashape.unirest.http.HttpResponse;
 import okhttp3.*;
 import org.apache.samza.Partition;
 import org.apache.samza.config.Config;
@@ -28,6 +27,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import redis.clients.jedis.Jedis;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -59,7 +59,7 @@ public class ContentCacheUpdaterServiceTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         redisConnectMock = mock(RedisConnect.class);
         contentCacheUpdaterSinkMock = mock(ContentCacheUpdaterSink.class);
         configMock = mock(Config.class);
@@ -94,8 +94,8 @@ public class ContentCacheUpdaterServiceTest {
                 .toReturn(defaultListValues);
         contentCacheConfig = new ContentCacheConfig(configMock);
         new BaseCacheUpdaterService(redisConnectMock);
-        String validDialCodeUrl = "https://localhost:3000/api/dialcode/v3/read/E1L8W5";
-        String inValidDialCodeUrl = "https://localhost:3000/api/dialcode/v3/read/test";
+        String validDialCodeUrl = "https://localhost/api/dialcode/v3/read/E1L8W5";
+        String inValidDialCodeUrl = "https://localhost/api/dialcode/v3/read/test";
         createStub(validDialCodeUrl, createTestResponse(validDialCodeUrl, EventFixture.VALID_DIAL_CODE_RESPONSE, 200, contentCacheConfig.getAuthorizationKey()), contentCacheConfig.getAuthorizationKey());
         createStub(inValidDialCodeUrl, createTestResponse(inValidDialCodeUrl, EventFixture.INVALID_DIAL_CODE_RESPONSE, 404, contentCacheConfig.getAuthorizationKey()), contentCacheConfig.getAuthorizationKey());
         contentCacheUpdaterService = new ContentCacheUpdaterService(contentCacheConfig, redisConnectMock, jobMetricsMock, restUtilMock);
@@ -103,12 +103,12 @@ public class ContentCacheUpdaterServiceTest {
     }
 
 
-    public Response createTestResponse(String apiUrl, String response, int status, String authKey) {
+    public String createTestResponse(String apiUrl, String response, int status, String authKey) throws IOException {
         Request mockRequest = new Request.Builder()
                 .url(apiUrl)
                 .header("Authorization", authKey)
                 .build();
-        return new Response.Builder()
+        return Objects.requireNonNull(new Response.Builder()
                 .request(mockRequest)
                 .protocol(Protocol.HTTP_2)
                 .code(status) // status code
@@ -117,15 +117,14 @@ public class ContentCacheUpdaterServiceTest {
                         MediaType.get("application/json; charset=utf-8"),
                         response
                 ))
-                .build();
+                .build().body()).string();
     }
 
-    public void createStub(String apiUrl, Response response, String authKey) {
-
+    public void createStub(String apiUrl, String response, String authKey) {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authKey);
         try {
-            stub(restUtilMock.get(apiUrl, headers)).toReturn(new Gson().fromJson(String.valueOf(response), HttpResponse.class));
+            when(restUtilMock.get(apiUrl, headers)).thenReturn(response);
         } catch (Exception e) {
             System.out.println("Exception is" + e);
         }
@@ -291,7 +290,6 @@ public class ContentCacheUpdaterServiceTest {
         str.add("English");
         assertEquals(str, parsedData.get("language"));
     }
-
     @Test
     public void shouldMarkEventSkippedForNonodeUniqueId() throws Exception {
         stub(envelopeMock.getMessage()).toReturn(EventFixture.CONTENT_EVENT_EMPTY_NODE_UNIQUEID);
@@ -299,10 +297,8 @@ public class ContentCacheUpdaterServiceTest {
         contentCacheUpdaterTask.process(envelopeMock, messageCollector, taskCoordinator);
         ContentCacheUpdaterSource source = new ContentCacheUpdaterSource(envelopeMock);
         contentCacheUpdaterService.process(source, contentCacheUpdaterSinkMock);
-
         verify(contentCacheUpdaterSinkMock, times(1)).markSkipped();
     }
-
     @Test
     @SuppressWarnings("unchecked")
     public void shouldNotAddEventIfItIsEmpty() throws Exception {

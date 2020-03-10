@@ -1,11 +1,8 @@
 package org.ekstep.ep.samza.util;
 
-import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.Map;
@@ -24,10 +21,9 @@ public class RestUtil {
 //                .get();
 //        requestHeaders.forEach((k, v) -> requestBuilder.addHeader(k, v));
 //        return client.newCall(requestBuilder.build()).execute();
-    public HttpResponse<String> get(String apiURL, Map<String, String> requestHeaders) throws UnirestException {
+    public String get(String apiURL, Map<String, String> requestHeaders) throws UnirestException {
         GetRequest request = Unirest.get(apiURL);
         request.headers(requestHeaders);
-        return request.asString();
+        return request.asString().getBody();
     }
-    //}
 }

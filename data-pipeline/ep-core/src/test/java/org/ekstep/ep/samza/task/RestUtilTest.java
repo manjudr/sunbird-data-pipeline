@@ -29,10 +29,10 @@ public class RestUtilTest {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "");
         try {
-            HttpResponse<String> res = new RestUtil().get("http://127.0.0.1:3000/api/dialcode/v3/read/", headers);
+             String res = new RestUtil().get("http://127.0.0.1:3000/api/dialcode/v3/read/", headers);
             // TODO: Assertion are failing need to add
-            System.out.println("response is" + res.getBody());
-            assertNotNull(res.getBody());
+            System.out.println("response is" + res);
+            assertNotNull(res);
         } catch (UnirestException e) {
             System.out.println("Exception is" + e);
         } finally {
