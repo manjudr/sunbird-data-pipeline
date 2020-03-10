@@ -3,6 +3,7 @@ package org.ekstep.ep.samza.service;
 import com.fiftyonred.mock_jedis.MockJedis;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mashape.unirest.http.HttpResponse;
 import okhttp3.*;
 import org.apache.samza.Partition;
 import org.apache.samza.config.Config;
@@ -93,8 +94,8 @@ public class ContentCacheUpdaterServiceTest {
                 .toReturn(defaultListValues);
         contentCacheConfig = new ContentCacheConfig(configMock);
         new BaseCacheUpdaterService(redisConnectMock);
-        String validDialCodeUrl = "https://localhost/api/dialcode/v3/read/E1L8W5";
-        String inValidDialCodeUrl = "https://localhost/api/dialcode/v3/read/test";
+        String validDialCodeUrl = "https://localhost:3000/api/dialcode/v3/read/E1L8W5";
+        String inValidDialCodeUrl = "https://localhost:3000/api/dialcode/v3/read/test";
         createStub(validDialCodeUrl, createTestResponse(validDialCodeUrl, EventFixture.VALID_DIAL_CODE_RESPONSE, 200, contentCacheConfig.getAuthorizationKey()), contentCacheConfig.getAuthorizationKey());
         createStub(inValidDialCodeUrl, createTestResponse(inValidDialCodeUrl, EventFixture.INVALID_DIAL_CODE_RESPONSE, 404, contentCacheConfig.getAuthorizationKey()), contentCacheConfig.getAuthorizationKey());
         contentCacheUpdaterService = new ContentCacheUpdaterService(contentCacheConfig, redisConnectMock, jobMetricsMock, restUtilMock);
@@ -120,10 +121,11 @@ public class ContentCacheUpdaterServiceTest {
     }
 
     public void createStub(String apiUrl, Response response, String authKey) {
+
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authKey);
         try {
-            stub(restUtilMock.get(apiUrl, headers)).toReturn(response);
+            stub(restUtilMock.get(apiUrl, headers)).toReturn(new Gson().fromJson(String.valueOf(response), HttpResponse.class));
         } catch (Exception e) {
             System.out.println("Exception is" + e);
         }

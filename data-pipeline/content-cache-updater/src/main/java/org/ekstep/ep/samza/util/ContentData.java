@@ -2,6 +2,7 @@ package org.ekstep.ep.samza.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mashape.unirest.http.HttpResponse;
 import org.ekstep.ep.samza.core.Logger;
 import org.ekstep.ep.samza.task.ContentCacheConfig;
 
@@ -65,8 +66,11 @@ public class ContentData {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", authKey);
         try {
-            okhttp3.Response httpResponse = restUtil.get(apiUrl, headers);
-            String responseBody = httpResponse.body().string();
+            System.out.println(apiUrl);
+            HttpResponse<String> httpResponse = restUtil.get(apiUrl, headers);
+            System.out.println("res" + httpResponse);
+            String responseBody = httpResponse.getBody();
+            System.out.println("responseBody" + responseBody);
             Gson gson = new Gson();
             Map<String, Object> response = gson.fromJson(
                     responseBody, new TypeToken<HashMap<String, Object>>() {
