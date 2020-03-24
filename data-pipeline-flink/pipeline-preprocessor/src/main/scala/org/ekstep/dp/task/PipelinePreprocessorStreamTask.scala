@@ -29,7 +29,6 @@ class PipelinePreprocessorStreamTask(config: PipelinePreprocessorConfig) extends
         * 2. DeduplicationFunction
         * 3. TelemetryRouterFunction
         */
-
        val validtionStream: SingleOutputStreamOperator[Event] =
          env.addSource(kafkaConsumer, "telemetry-raw-events-consumer")
            .process(new TelemetryValidationFunction(config)).name("TelemetryValidator")
