@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory
 class DialCodeDeNormedFunction(config: DeNormalizationConfig)(implicit val eventTypeInfo: TypeInformation[Event])
   extends ProcessFunction[Event, Event] {
   private[this] val logger = LoggerFactory.getLogger(classOf[DialCodeDeNormedFunction])
-  override def processElement(i: Event, context: ProcessFunction[Event, Event]#Context, collector: Collector[Event]): Unit = {
+  override def processElement(event: Event, context: ProcessFunction[Event, Event]#Context, collector: Collector[Event]): Unit = {
 
-
+    if(event.objectType().equalsIgnoreCase("dialcode") || event.objectType().equalsIgnoreCase("qr")){
+      eventUpdaterFactory.getInstance("dialcode-data-updater").update(event, event.objectID())
+    }
 
 
 

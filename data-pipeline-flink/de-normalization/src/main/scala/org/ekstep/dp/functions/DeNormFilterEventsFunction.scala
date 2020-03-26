@@ -23,12 +23,14 @@ class DeNormFilterEventsFunction(config: DeNormalizationConfig)(implicit val eve
     if (eventId.eq("ERROR")) {
       context.output(deNormedRejectedEventsOutPut, event);
     } else if (eventId.contains(config.summaryEventsList)) {
+      event.CompareAndUpdateETS()
       context.output(deNormAcceptedEventsOutPut, event)
     } else if (eventId.startsWith("ME_")) {
       context.output(deNormedRejectedEventsOutPut, event)
     } else if (event.isOlder(config.ignorePeriodInMonths)) {
       context.output(deNormFailedEventsOutPut, event)
     } else {
+      event.CompareAndUpdateETS()
       context.output(deNormAcceptedEventsOutPut, event);
     }
   }
