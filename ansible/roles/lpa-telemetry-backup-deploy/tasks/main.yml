@@ -38,6 +38,12 @@
 #     - "{{ secor_service_name }}"
 #     - "{{ secor.properties }}"
 
+- name: Print secor_service_name
+  debug:
+    msg: "User {{ item.key }} is {{ item.value.service_description }} ({{ item.key }})"
+  with_dict: "{{ secor_service_name }}"
+
+
 - name: Create monitoring cron job
   become: yes
   become_user: "{{ analytics_user }}"
