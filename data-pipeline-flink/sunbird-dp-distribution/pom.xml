@@ -22,9 +22,26 @@
         </dependency>
         <dependency>
             <groupId>org.sunbird.dp.jobs</groupId>
-            <artifactId>de-duplication</artifactId>
+            <artifactId>pipeline-preprocessor</artifactId>
             <version>0.0.1</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.sunbird.dp.jobs</groupId>
+            <artifactId>de-normalization</artifactId>
+            <version>0.0.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.sunbird.dp.jobs</groupId>
+            <artifactId>druid-events-validator</artifactId>
+            <version>0.0.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.spotify</groupId>
+            <artifactId>dockerfile-maven-plugin</artifactId>
+            <version>1.4.13</version>
         </dependency>
     </dependencies>
 
@@ -68,7 +85,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <repository>docker.io/anandp504/sunbird-datapipeline</repository>
+                            <repository>docker.io/${docker.hub}/sunbird-datapipeline</repository>
                             <tag>${project.version}</tag>
                         </configuration>
                     </plugin>
