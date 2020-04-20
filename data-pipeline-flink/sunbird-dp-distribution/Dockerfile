@@ -1,5 +1,6 @@
 FROM anandp504/flink:1.10.0-scala_2.12
 PWD
+CD /
 COPY /var/lib/jenkins/workspace/Build/DataPipeline/FlinkJobs/data-pipeline-flink/sunbird-dp-distribution-1.0.tar.gz /tmp
 USER flink
 RUN tar -xvf /tmp/sunbird-dp-distribution-1.0.tar.gz -C $FLINK_HOME/lib/
