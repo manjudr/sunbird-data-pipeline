@@ -35,13 +35,12 @@ node('build-slave') {
                 env.NODE_ENV = "build"
                 print "Environment will be : ${env.NODE_ENV}"
                 sh """
-                   cd data-pipeline-flink
-                   mvn clean install -DskipTests
-                   cd sunbird-dp-distribution &&  mvn clean package -Pbuild-docker-image -Ddocker.hub=${hub_org}
+                   cd data-pipeline-flink/sunbird-dp-distribution && chmod 777 build.sh
+                   ./build.sh ${build_tag} ${env.NODE_NAME} ${hub_org}
                    """
             }
             stage('ArchiveArtifacts') {
-                archiveArtifacts "druid/druid-api/metadata.json"
+                archiveArtifacts "data-pipeline-flink/sunbird-dp-distribution/metadata.json"
                 currentBuild.description = "${build_tag}"
             }
         }

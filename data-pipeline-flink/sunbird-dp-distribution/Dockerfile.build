@@ -1,0 +1,10 @@
+FROM node:8.11-alpine
+MAINTAINER "Manjunath Davanam" "manjunathd@ilimi.in"
+RUN apk update \
+    && apk add zip \
+    && mkdir -p /opt/sunbird-dp-distribution
+ADD src /opt/sunbird-dp-distribution/
+WORKDIR /opt/sunbird-dp-distribution/
+RUN  mvn clean package
+WORKDIR /opt
+CMD ["zip", "-r", "sunbird-dp-distribution", "sunbird-dp-distribution"]

@@ -1,5 +1,4 @@
 FROM anandp504/flink:1.10.0-scala_2.12
-RUN mvn package -Pbuild-docker-image 
 COPY target/sunbird-dp-distribution-1.0.tar.gz /tmp
 USER flink
 RUN tar -xvf /tmp/sunbird-dp-distribution-1.0.tar.gz -C $FLINK_HOME/lib/
