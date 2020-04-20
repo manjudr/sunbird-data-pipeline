@@ -38,14 +38,10 @@
             <version>0.0.1</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>com.spotify</groupId>
-            <artifactId>dockerfile-maven-plugin</artifactId>
-            <version>1.4.13</version>
-        </dependency>
     </dependencies>
 
     <build>
+        <plugins>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -66,7 +62,6 @@
             </plugin>
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>build-docker-image</id>
@@ -85,7 +80,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <repository>docker.io/${docker.hub}/sunbird-datapipeline</repository>
+                            <repository>docker.io/manjudr/sunbird-datapipeline</repository>
                             <tag>${project.version}</tag>
                         </configuration>
                     </plugin>
