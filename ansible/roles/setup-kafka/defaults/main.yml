@@ -17,32 +17,17 @@ processing_kafka_overriden_topics:
   - name: telemetry.raw
     retention_time: 172800000
     replication_factor: 1
-  - name: telemetry.valid
-    retention_time: 21600000
-    replication_factor: 1
   - name: telemetry.unique
     retention_time: 172800000
     replication_factor: 1
   - name: telemetry.duplicate
     retention_time: 21600000
     replication_factor: 1
-  - name: telemetry.sink
-    retention_time: 21600000
-    replication_factor: 1
-  - name: telemetry.with_location
-    retention_time: 86400000
-    replication_factor: 1
   - name: telemetry.audit
     retention_time: 86400000
     replication_factor: 1
   - name: telemetry.denorm
     retention_time: 86400000
-    replication_factor: 1
-  - name: telemetry.denorm.valid
-    retention_time: 86400000
-    replication_factor: 1
-  - name: telemetry.de_normalized
-    retention_time: 21600000
     replication_factor: 1
   - name: telemetry.log
     retention_time: 21600000
@@ -127,9 +112,6 @@ processing_kafka_overriden_topics:
   - name: telemetry.assess.failed
     retention_time: 2592000000
     replication_factor: 1
-  - name: telemetry.share
-    retention_time: 2592000000
-    replication_factor: 1        
 
 processing_kafka_topics:
   - name: system.command
@@ -139,20 +121,11 @@ processing_kafka_topics:
   - name: telemetry.raw
     num_of_partitions: 4
     replication_factor: 1
-  - name: telemetry.valid
-    num_of_partitions: 4
-    replication_factor: 1
   - name: telemetry.unique
     num_of_partitions: 8
     replication_factor: 1
   - name: telemetry.duplicate
     num_of_partitions: 1
-    replication_factor: 1
-  - name: telemetry.sink
-    num_of_partitions: 8
-    replication_factor: 1
-  - name: telemetry.with_location
-    num_of_partitions: 8
     replication_factor: 1
   - name: telemetry.audit
     num_of_partitions: 2
@@ -251,9 +224,6 @@ processing_kafka_topics:
     num_of_partitions: 1
     replication_factor: 1
   - name: telemetry.assess.failed
-    num_of_partitions: 1
-    replication_factor: 1
-  - name: telemetry.share
     num_of_partitions: 1
     replication_factor: 1
   - name: prom.monitoring.metrics
