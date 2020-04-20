@@ -42,7 +42,6 @@
 
     <build>
         <plugins>
-        <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
