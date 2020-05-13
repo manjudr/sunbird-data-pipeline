@@ -17,9 +17,9 @@ config() {
 	currentDate=$(date "+%Y-%m-%d");
 	analytics_home={{ analytics.home }}	
 	temp_folder={{ job_manager_tmp_dir }}
-	sparkCassandraConnectionHost="{{groups['lp-cassandra'][0]}}"
-	sunbirdPlatformCassandraHost="{{ core_cassandra_host }}"
-	sunbirdPlatformElasticsearchHost="{{ sunbird_es_host }}"
+	sparkCassandraConnectionHost="28.0.2.56,28.0.2.57,28.0.2.58"
+	sunbirdPlatformCassandraHost="28.0.2.56,28.0.2.57,28.0.2.58"
+	sunbirdPlatformElasticsearchHost="28.0.2.59,28.0.2.60,28.0.2.61"
 	jobManagerJobsCount="{{ analytics_jobs_count }}"
 	dataExhaustChannel="{{ data_exhaust_Channel }}"
 	pipelineAuditSlackUser="Pipeline Audit"
