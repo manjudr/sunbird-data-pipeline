@@ -7,7 +7,7 @@ logstash_conf:
  - ".indexer.pipeline_metrics"
  - ".indexer.analytics_metrics"
  - ".indexer.log_error.events"
- - ".indexer.telemetry.router"
+ - ".indexer.telemetry_router"
 
 es_mapping_file:
  - "telemetry_mapping.json" 
