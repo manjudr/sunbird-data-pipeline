@@ -2,7 +2,7 @@ input {
 	kafka {
 		bootstrap_servers => "{{bootstrap_server}}"
 		topics => ["{{kafka_topic_prefix}}.telemetry.ingest"]
-		group_id => "{{kafka_topic_prefix}}.telemetry_group_ingest"
+		group_id => "{{kafka_topic_prefix}}.tekenetrt_ingest"
 		auto_offset_reset => "latest"
 		codec => "json"
 		consumer_threads => 1
@@ -15,7 +15,7 @@ output {
 if [type] == 'telemetry_index' { 
 	  kafka { 
 	    bootstrap_servers => "{{bootstrap_server}}"
-	    topic_id =>  "logstash.telemetry.route"
+	    topic_id =>  "{{telemetry_events_flink_ingest_topic}}"
 	    codec => json
 	  }
   }  
