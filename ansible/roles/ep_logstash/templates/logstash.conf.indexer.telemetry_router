@@ -15,8 +15,5 @@ output {
   kafka { 
     bootstrap_servers => "{{bootstrap_server}}"
     topic_id =>  "dev.telemetry.ingest"
-    codec => plain {
-            format => "%{message}"
-        }
   }
 }
