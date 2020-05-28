@@ -1,0 +1,22 @@
+input {
+	kafka {
+		bootstrap_servers => "{{bootstrap_server}}"
+		topics => ["{{kafka_topic_prefix}}.telemetry.ingest"]
+		group_id => "{{kafka_topic_prefix}}.telemetry.ingest"
+		auto_offset_reset => "latest"
+		codec => "json"
+		consumer_threads => 1
+		fetch_max_bytes => "1048576"
+		type => "telemetry_index"
+	}
+}
+
+output {
+  kafka { 
+    bootstrap_servers => "{{bootstrap_server}}"
+    topic_id =>  "dev.telemetry.ingest"
+    codec => plain {
+            format => "%{message}"
+        }
+  }
+}
