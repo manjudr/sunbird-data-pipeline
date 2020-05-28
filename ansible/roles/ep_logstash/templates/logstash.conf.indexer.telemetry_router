@@ -11,9 +11,12 @@ input {
 	}
 }
 output {
+
+if [type] == 'telemetry_index' { 
 	  kafka { 
 	    bootstrap_servers => "{{bootstrap_server}}"
 	    topic_id =>  "logstash.telemetry.route"
 	    codec => json
 	  }
+  }  
 }
