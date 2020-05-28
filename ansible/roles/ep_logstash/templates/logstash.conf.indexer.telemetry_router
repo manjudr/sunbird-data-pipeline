@@ -14,7 +14,7 @@ input {
 output {
   kafka { 
     bootstrap_servers => "{{bootstrap_server}}"
-    topic_id =>  "flink.telemetry.ingest.dup"
+    topic_id =>  "logstash.telemetry.route"
     codec => json
   }
 }
