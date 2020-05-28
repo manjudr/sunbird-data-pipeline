@@ -11,7 +11,7 @@ input {
 	}
 }
 output {
- if [kafka][topic] == "{{kafka_topic_prefix}}.telemetry.ingest" {
+ if [@metadata][kafka][topic] == "{{kafka_topic_prefix}}.telemetry.ingest" {
 	  kafka { 
 	    bootstrap_servers => "{{bootstrap_server}}"
 	    topic_id =>  "logstash.telemetry.route"
