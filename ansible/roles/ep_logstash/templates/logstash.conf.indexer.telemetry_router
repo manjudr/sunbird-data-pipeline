@@ -15,5 +15,6 @@ output {
   kafka { 
     bootstrap_servers => "{{bootstrap_server}}"
     topic_id =>  "flink.telemetry.ingest.dup"
+    codec => json
   }
 }
