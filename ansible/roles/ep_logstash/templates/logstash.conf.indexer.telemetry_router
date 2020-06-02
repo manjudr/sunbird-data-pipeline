@@ -1,7 +1,7 @@
 input {
 	kafka {
 		bootstrap_servers => "{{bootstrap_server}}"
-		topics => ["{{kafka_topic_prefix}}.telemetry.ingest"]
+		topics => ["{{kafka_topic_prefix}}.telemetry.ingest", "{{kafka_topic_prefix}}.telemetry.raw"]
 		group_id => "{{kafka_topic_prefix}}.flink.telemetry.ingestion"
 		auto_offset_reset => "earliest"
 		codec => "json"
@@ -11,12 +11,13 @@ input {
 	}
 }
 output {
+	if [type] == 'telemetry_index' { 
+		  kafka { 
+		    bootstrap_servers => "{{bootstrap_server}}"
+		    topic_id =>  "{{telemetry_events_flink_ingest_topic}}"
+		    codec => json
+		 }
+  	}  
 
-if [type] == 'telemetry_index' { 
-	  kafka { 
-	    bootstrap_servers => "{{bootstrap_server}}"
-	    topic_id =>  "{{telemetry_events_flink_ingest_topic}}"
-	    codec => json
-	  }
-  }  
 }
+
