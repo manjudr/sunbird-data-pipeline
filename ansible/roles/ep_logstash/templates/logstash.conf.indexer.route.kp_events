@@ -12,7 +12,7 @@ input {
 }
 
 output {
-		if [mid] =~ "LP:" {
+		if [mid] =~ "LP." {
 			kafka {
 			    bootstrap_servers => "{{bootstrap_server}}"
 			    topic_id =>  "{{telemetry_events_flink_raw_topic}}"
