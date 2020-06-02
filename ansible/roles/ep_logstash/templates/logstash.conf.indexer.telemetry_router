@@ -1,48 +1,34 @@
 input {
 	kafka {
 		bootstrap_servers => "{{bootstrap_server}}"
-		topics => ["{{kafka_topic_prefix}}.telemetry.ingest"]
-		group_id => "{{kafka_topic_prefix}}.flink.telemetry.ingestion"
+		topics => ["{{kafka_topic_prefix}}.telemetry.ingest", "{{kafka_topic_prefix}}.telemetry.raw"]
+		group_id => "{{kafka_topic_prefix}}.flink.events_consumer"
 		auto_offset_reset => "earliest"
 		codec => "json"
 		consumer_threads => 1
 		fetch_max_bytes => "5242880"
 		type => "telemetry_index"
 	}
-
-	kafka {
-		bootstrap_servers => "{{bootstrap_server}}"
-		topics => ["{{kafka_topic_prefix}}.telemetry.raw"]
-		group_id => "{{kafka_topic_prefix}}.flink.telemetry.raw"
-		auto_offset_reset => "earliest"
-		codec => "json"
-		consumer_threads => 1
-		fetch_max_bytes => "1048576"
-		type => "telemetry_raw_index"
-	}
-
-
 }
 output {
 
-	if [type] == 'telemetry_index' { 
+	if [kafka][topic] == ""{{kafka_topic_prefix}}.telemetry.ingest" { 
 		  kafka { 
 		    bootstrap_servers => "{{bootstrap_server}}"
 		    topic_id =>  "{{telemetry_events_flink_ingest_topic}}"
 		    codec => json
 		  }
-	  }
+	 }
 
-	  if [type] == 'telemetry_raw_index' { 
-		  if [mid] =~ "LP." {
-				kafka {
-				    bootstrap_servers => "{{bootstrap_server}}"
-				    topic_id =>  "{{telemetry_events_flink_raw_topic}}"
-				    codec => json
-				 }
-		   }
-	  }  
-	}
-    
+	else if [kafka][topic] == "{{kafka_topic_prefix}}.telemetry.raw" { 
+	  if [mid] =~ "LP." {
+			kafka {
+			    bootstrap_servers => "{{bootstrap_server}}"
+			    topic_id =>  "{{telemetry_events_flink_raw_topic}}"
+			    codec => json
+			 }
+	   }
+	}  
+
 }
 
