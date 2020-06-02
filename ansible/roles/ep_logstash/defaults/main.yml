@@ -8,7 +8,7 @@ logstash_conf:
  - ".indexer.analytics_metrics"
  - ".indexer.log_error.events"
  - ".indexer.telemetry_router"
- - ".indexer.route.kp_events"
+ #- ".indexer.route.kp_events"
 
 es_mapping_file:
  - "telemetry_mapping.json" 
