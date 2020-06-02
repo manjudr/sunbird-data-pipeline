@@ -7,7 +7,6 @@ input {
 		codec => "json"
 		consumer_threads => 1
 		fetch_max_bytes => "1048576"
-		type => "telemetry_index"
 	}
 }
 
