@@ -44,5 +44,5 @@ logstash_version: '6.x'
 crash_log_mapping_file_path: "{{ logstash_home }}/mappings/crash-log-mapping.json"
 crash_log_index : "crash-logs"
 telemetry_events_flink_ingest_topic: "dev.telemetry.ingest"
-telemetry_events_flink_raw_topic: "dev.telemetry.raw"
+telemetry_events_flink_raw_topic: "logstash.telemetry.raw"
 
