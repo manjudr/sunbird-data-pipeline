@@ -2,11 +2,11 @@ input {
 	kafka {
 		bootstrap_servers => "{{bootstrap_server}}"
 		topics => ["{{kafka_topic_prefix}}.telemetry.ingest"]
-		group_id => "{{kafka_topic_prefix}}.tekenetrt_ingest"
+		group_id => "{{kafka_topic_prefix}}.telemetry_ingest"
 		auto_offset_reset => "latest"
 		codec => "json"
 		consumer_threads => 1
-		fetch_max_bytes => "1048576"
+		fetch_max_bytes => "5242880"
 		type => "telemetry_index"
 	}
 }
