@@ -25,22 +25,24 @@ input {
 }
 output {
 
-if [type] == 'telemetry_index' { 
-	  kafka { 
-	    bootstrap_servers => "{{bootstrap_server}}"
-	    topic_id =>  "{{telemetry_events_flink_ingest_topic}}"
-	    codec => json
+	if [type] == 'telemetry_index' { 
+		  kafka { 
+		    bootstrap_servers => "{{bootstrap_server}}"
+		    topic_id =>  "{{telemetry_events_flink_ingest_topic}}"
+		    codec => json
+		  }
 	  }
-  }  
+
+	  if [type] == 'telemetry_raw_index' { 
+		  if [mid] =~ "LP." {
+				kafka {
+				    bootstrap_servers => "{{bootstrap_server}}"
+				    topic_id =>  "{{telemetry_events_flink_raw_topic}}"
+				    codec => json
+				 }
+		   }
+	  }  
+	}
+    
 }
 
-if [type] == 'telemetry_raw_index' { 
-	  if [mid] =~ "LP." {
-			kafka {
-			    bootstrap_servers => "{{bootstrap_server}}"
-			    topic_id =>  "{{telemetry_events_flink_raw_topic}}"
-			    codec => json
-			 }
-	   }
-  }  
-}
