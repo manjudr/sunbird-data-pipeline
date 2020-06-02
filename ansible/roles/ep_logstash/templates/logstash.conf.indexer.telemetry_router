@@ -1,5 +1,6 @@
 input {
 	kafka {
+		topics => ["{{kafka_topic_prefix}}.telemetry.ingest"]
 		bootstrap_servers => "{{bootstrap_server}}"
 		group_id => "{{kafka_topic_prefix}}.flink.telemetry.ingestion"
 		auto_offset_reset => "earliest"
