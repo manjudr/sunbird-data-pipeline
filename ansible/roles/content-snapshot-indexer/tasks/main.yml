@@ -53,7 +53,7 @@
   tags:
     - deploy
 
-- name: Copy adhoc-jobs jar file
+- name: Copy etl-jobs jar file
   become: yes
   copy:
     src: "{{ content_snapshot_jar_name }}"
