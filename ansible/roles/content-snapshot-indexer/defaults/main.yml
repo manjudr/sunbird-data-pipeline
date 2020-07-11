@@ -9,7 +9,7 @@ redis:
   host: "{{metadata_redis_host}}" # Redis DP IP 
   port: "6379"
   user:
-    index: "4"
+    index: "12"
     source_key: "id"
   content:
     index: "5"
