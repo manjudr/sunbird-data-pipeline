@@ -256,6 +256,6 @@ sunbird.user.cluster.host="{{ groups['core-cassandra'][0] }}"
 sunbird.courses.cluster.host="{{ groups['core-cassandra'][0] }}"
 sunbird.content.cluster.host="{{ groups['core-cassandra'][0] }}"
 collection.exhaust.store.prefix=""
-postgres.table.job_request="{{ report_exhast_job_request_table }}"
+postgres.table.job_request="sunbirddev_job_request"
 
 ## Collection Exhaust Jobs Configuration - End ##
