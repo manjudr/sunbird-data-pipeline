@@ -10,10 +10,10 @@ class Event(eventMap: util.Map[String, Any]) extends Events(eventMap) {
     private val jobName = "ContentCacheUpdater"
     import scala.collection.JavaConverters._
     def extractProperties(): Map[String, Any] = {
-        val properties = telemetry.read[LinkedTreeMap[String, Any]]("transactionData.properties")
+        val properties = telemetry.read[util.HashMap[String, Any]]("transactionData.properties")
         properties.map { propertySet =>
             propertySet.asScala.map {
-                case (key, value) => key -> value.asInstanceOf[LinkedTreeMap[String, Any]].getOrDefault("nv", None)
+                case (key, value) => key -> value.asInstanceOf[util.HashMap[String, Any]].getOrDefault("nv", None)
             }.toMap
         }.getOrElse(Map.empty[String, Any])
     }

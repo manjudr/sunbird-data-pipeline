@@ -36,7 +36,7 @@ class Event(eventMap: util.Map[String, Any]) extends Events(eventMap) {
     telemetry.read("userId").get
   }
 
-  def assessEvents: util.List[LinkedTreeMap[String, AnyRef]] = {
+  def assessEvents: util.List[util.HashMap[String, AnyRef]] = {
     telemetry.read("events").get
   }
 
